@@ -2,7 +2,7 @@ name: 'Wodby deploy'
 description: 'Handles a deploy on a Wodby app instance'
 branding:
   icon: arrow-up-circle
-  lor: blue
+  color: blue
 inputs:
   uuid:
     description: 'Instance UUID (provided by Wodby)'
