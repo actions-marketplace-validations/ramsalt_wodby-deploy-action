@@ -13,7 +13,7 @@ if [[ "#${CUSTOM_DOCKERFILE:-}" != "#" ]]; then
 fi
 
 # Initialize 
-wodby ci init --dind $INSTANCE_UUID
+wodby ci init $INSTANCE_UUID
 wodby ci build $BUILD_OPTS
 wodby ci release
 wodby ci deploy
