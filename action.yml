@@ -11,16 +11,29 @@ inputs:
     description: 'Base path to build'
     required: true
     default: './'
+  dockerfile:
+    description: 'Path to a custom Dockerfile (Will replace one provided by Wodby)'
+    required: false
 runs:
   using: "composite"
   steps:
-  - run: wget -qO- https://api.wodby.com/api/v1/get/cli | sh
+  -
+    run: wget -qO- https://api.wodby.com/api/v1/get/cli | sh
     shell: bash
-  - run: wodby ci init ${{ inputs.uuid }}
+  -
+    run: wodby ci init ${{ inputs.uuid }}
     shell: bash
-  - run: wodby ci build --from ${{ inputs.path }}
+  -
+    if: ${{ inputs.dockerfile }}
+    run: wodby ci build --from ${{ inputs.path }} --dockerfile ${{ inputs.dockerfile }}
     shell: bash
-  - run: wodby ci release
+  -
+    if: ${{ not inputs.dockerfile }}
+    run: wodby ci build --from ${{ inputs.path }}
     shell: bash
-  - run: wodby ci deploy
+  -
+    run: wodby ci release
+    shell: bash
+  -
+    run: wodby ci deploy
     shell: bash
