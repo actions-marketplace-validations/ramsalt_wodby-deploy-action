@@ -15,9 +15,16 @@ inputs:
     description: 'Path to a custom Dockerfile (Will replace one provided by Wodby)'
     required: false
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
-  env:
-    INSTANCE_UUID: ${{ inputs.uuid }}
-    BUILD_PATH: ${{ inputs.path }}
-    CUSTOM_DOCKERFILE: ${{ inputs.dockerfile }}
+  using: "composite"
+  steps:
+  -
+    name: "Install Wodby CLI tool"
+    run: wget -qO- https://api.wodby.com/api/v1/get/cli | sh
+    shell: bash
+  -
+    run: ${{ github.action_path }}/deploy.sh
+    shell: bash
+    env:
+      INSTANCE_UUID: ${{ inputs.uuid }}
+      BUILD_PATH: ${{ inputs.path }}
+      CUSTOM_DOCKERFILE: ${{ inputs.dockerfile }}
