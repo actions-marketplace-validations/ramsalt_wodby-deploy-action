@@ -14,6 +14,13 @@ inputs:
   dockerfile:
     description: 'Path to a custom Dockerfile (Will replace one provided by Wodby)'
     required: false
+  create_env_symlink:
+    description: 'Set to'
+    required: false
+  env_filepath:
+    description: 'Path to a file which will be symlinked to a ${path}/.env file.'
+    required: false
+    default: '/mnt/files/keys/env_file'
 runs:
   using: "composite"
   steps:
@@ -28,3 +35,5 @@ runs:
       INSTANCE_UUID: ${{ inputs.uuid }}
       BUILD_PATH: ${{ inputs.path }}
       CUSTOM_DOCKERFILE: ${{ inputs.dockerfile }}
+      CREATE_ENV_SYMLINK: ${{ inputs.create_env_symlink }}
+      ENV_FILEPATH: ${{ inputs.env_filepath }}
